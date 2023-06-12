@@ -1,37 +1,38 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "seventv",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "7TV",
+	"description": "7TV in Minecraft!",
 	"authors": [
-		"Me!"
+		"Vinrobot"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Vinrobot/Minecraft-7TV",
+		"sources": "https://github.com/Vinrobot/Minecraft-7TV",
+		"issues": "https://github.com/Vinrobot/Minecraft-7TV/issues"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/7tv/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"net.vinrobot.seventv.SevenTVMod"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"net.vinrobot.seventv.client.SevenTVModClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"7tv.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "7tv.client.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
 		"fabricloader": ">=0.14.21",
-		"minecraft": "~1.20.1",
+		"minecraft": "~1.20",
 		"java": ">=17",
 		"fabric-api": "*"
 	},

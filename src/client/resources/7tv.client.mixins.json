@@ -1,9 +1,9 @@
 {
 	"required": true,
-	"package": "com.example.mixin.client",
+	"package": "net.vinrobot.seventv.client.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"ExampleClientMixin"
+		"SevenTVClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
