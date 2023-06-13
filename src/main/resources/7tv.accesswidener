@@ -1,0 +1,5 @@
+accessWidener	v1	named
+
+accessible class net/minecraft/client/font/FontManager$ProviderIndex
+
+accessible method net/minecraft/client/font/FontStorage getGlyphRenderer (Lnet/minecraft/client/font/RenderableGlyph;)Lnet/minecraft/client/font/GlyphRenderer;

@@ -3,6 +3,8 @@
 	"package": "net.vinrobot.seventv.client.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
+		"ChatHudMixin",
+		"FontManagerMixin",
 		"SevenTVClientMixin"
 	],
 	"injectors": {

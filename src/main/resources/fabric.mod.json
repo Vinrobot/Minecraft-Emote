@@ -23,6 +23,7 @@
 			"net.vinrobot.seventv.client.SevenTVModClient"
 		]
 	},
+	"accessWidener": "7tv.accesswidener",
 	"mixins": [
 		"7tv.mixins.json",
 		{
