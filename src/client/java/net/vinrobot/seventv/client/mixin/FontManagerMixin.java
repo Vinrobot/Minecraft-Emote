@@ -8,6 +8,7 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.vinrobot.seventv.SevenTVMod;
+import net.vinrobot.seventv.client.SevenTVModClient;
 import net.vinrobot.seventv.client.font.EmoteFontStorage;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +35,7 @@ public abstract class FontManagerMixin {
 		TextureManager textureManager = getTextureManager();
 		Map<Identifier, FontStorage> fontStorages = getFontStorages();
 
-		fontStorages.put(EmoteFontStorage.IDENTIFIER, new EmoteFontStorage(textureManager));
+		fontStorages.put(EmoteFontStorage.IDENTIFIER, new EmoteFontStorage(textureManager, SevenTVModClient.EMOTES_MANAGER));
 
 		SevenTVMod.LOGGER.info("Loaded EmoteFontStorage");
 	}

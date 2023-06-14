@@ -7,19 +7,22 @@ import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
-import net.vinrobot.seventv.client.SevenTVModClient;
+import net.vinrobot.seventv.client.text.EmotesManager;
 
 @Environment(EnvType.CLIENT)
 public class EmoteFontStorage extends FontStorage {
 	public static final Identifier IDENTIFIER = new Identifier("seventv.fonts", "emotes");
 
-	public EmoteFontStorage(TextureManager textureManager) {
+	private final EmotesManager emotesManager;
+
+	public EmoteFontStorage(TextureManager textureManager, EmotesManager emotesManager) {
 		super(textureManager, IDENTIFIER);
+		this.emotesManager = emotesManager;
 	}
 
 	@Override
 	protected FontStorage.GlyphPair findGlyph(int codePoint) {
-		return SevenTVModClient.EMOTES_MANAGER.getByCodepoint(codePoint)
+		return this.emotesManager.getByCodepoint(codePoint)
 			.map(EmoteGlyph::new)
 			.map(e -> new FontStorage.GlyphPair(e, e))
 			.orElseGet(() -> super.findGlyph(codePoint));

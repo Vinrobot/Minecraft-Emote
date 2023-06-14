@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.text.CharacterVisitor;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
-import net.vinrobot.seventv.client.SevenTVModClient;
 import net.vinrobot.seventv.client.font.EmoteFontStorage;
 
 import java.util.Iterator;
@@ -19,15 +18,17 @@ public class EmoteParser implements CharacterVisitor {
 	public static final Style EMOTE_STYLE = Style.EMPTY.withFont(EmoteFontStorage.IDENTIFIER);
 
 	private final CharacterVisitor visitor;
+	private final EmotesManager emotesManager;
 	private final List<InternalCharacter> characters = new LinkedList<>();
 
-	public EmoteParser(CharacterVisitor visitor) {
+	public EmoteParser(CharacterVisitor visitor, EmotesManager emotesManager) {
 		this.visitor = visitor;
+		this.emotesManager = emotesManager;
 	}
 
-	public static OrderedText wrapOrderedText(OrderedText orderedText) {
+	public static OrderedText wrapOrderedText(OrderedText orderedText, EmotesManager emotesManager) {
 		return (CharacterVisitor visitor) -> {
-			final EmoteParser parser = new EmoteParser(visitor);
+			final EmoteParser parser = new EmoteParser(visitor, emotesManager);
 			boolean rt = orderedText.accept(parser);
 			return rt && parser.flush();
 		};
@@ -49,7 +50,7 @@ public class EmoteParser implements CharacterVisitor {
 		}
 
 		String word = this.characters.stream().map(c -> c.content()).collect(Collectors.joining());
-		final Optional<EmoteCharacter> emote = SevenTVModClient.EMOTES_MANAGER.getByName(word);
+		final Optional<EmoteCharacter> emote = this.emotesManager.getByName(word);
 		return emote.map(this::handleEmote).orElseGet(this::handleText);
 	}
 
