@@ -1,5 +1,7 @@
 package net.vinrobot.seventv.client.font;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
 import net.minecraft.client.font.RenderableGlyph;
@@ -9,6 +11,7 @@ import net.vinrobot.seventv.client.text.EmoteCharacter;
 import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
+@Environment(EnvType.CLIENT)
 public class EmoteGlyph implements Glyph {
 	private final EmoteCharacter emoteCharacter;
 

@@ -1,9 +1,13 @@
 package net.vinrobot.seventv.client.text;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Environment(EnvType.CLIENT)
 public class EmotesManager {
 	private final Map<String, EmoteCharacter> byNames = new HashMap<>();
 	private final Map<Integer, EmoteCharacter> byCodePoints = new HashMap<>();

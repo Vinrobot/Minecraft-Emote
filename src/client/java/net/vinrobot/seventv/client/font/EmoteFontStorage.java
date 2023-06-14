@@ -1,5 +1,7 @@
 package net.vinrobot.seventv.client.font;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.font.FontStorage;
 import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
@@ -7,6 +9,7 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.vinrobot.seventv.client.SevenTVModClient;
 
+@Environment(EnvType.CLIENT)
 public class EmoteFontStorage extends FontStorage {
 	public static final Identifier IDENTIFIER = new Identifier("seventv.fonts", "emotes");
 

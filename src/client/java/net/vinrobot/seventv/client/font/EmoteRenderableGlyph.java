@@ -1,11 +1,14 @@
 package net.vinrobot.seventv.client.font;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.font.RenderableGlyph;
 import net.minecraft.client.texture.NativeImage;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 
+@Environment(EnvType.CLIENT)
 public class EmoteRenderableGlyph implements RenderableGlyph {
 	private final BufferedImage bufferedImage;
 

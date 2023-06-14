@@ -1,5 +1,7 @@
 package net.vinrobot.seventv.client.text;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.text.CharacterVisitor;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Environment(EnvType.CLIENT)
 public class EmoteParser implements CharacterVisitor {
 	public static final Style EMOTE_STYLE = Style.EMPTY.withFont(EmoteFontStorage.IDENTIFIER);
 
