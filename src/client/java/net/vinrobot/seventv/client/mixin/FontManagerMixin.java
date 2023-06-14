@@ -8,7 +8,7 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.vinrobot.seventv.SevenTVMod;
-import net.vinrobot.seventv.client.text.EmoteFontStorage;
+import net.vinrobot.seventv.client.font.EmoteFontStorage;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

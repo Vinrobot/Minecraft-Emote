@@ -4,6 +4,7 @@ import net.minecraft.text.CharacterVisitor;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.vinrobot.seventv.client.SevenTVModClient;
+import net.vinrobot.seventv.client.font.EmoteFontStorage;
 
 import java.util.Iterator;
 import java.util.LinkedList;
