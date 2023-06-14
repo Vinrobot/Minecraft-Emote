@@ -47,6 +47,7 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	modImplementation "com.twelvemonkeys.imageio:imageio-webp:3.9.4"
+	modImplementation "com.google.code.gson:gson:2.10.1"
 }
 
 processResources {
