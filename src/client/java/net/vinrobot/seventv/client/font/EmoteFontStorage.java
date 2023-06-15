@@ -22,7 +22,7 @@ public class EmoteFontStorage extends FontStorage {
 
 	@Override
 	protected FontStorage.GlyphPair findGlyph(int codePoint) {
-		return this.emotesManager.getByCodepoint(codePoint)
+		return this.emotesManager.getByCodePoint(codePoint)
 			.map(EmoteGlyph::new)
 			.map(e -> new FontStorage.GlyphPair(e, e))
 			.orElseGet(() -> super.findGlyph(codePoint));

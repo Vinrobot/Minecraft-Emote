@@ -27,7 +27,7 @@ public class EmotesManager {
 		return Optional.ofNullable(this.byNames.get(name));
 	}
 
-	public Optional<EmoteCharacter> getByCodepoint(int codePoint) {
+	public Optional<EmoteCharacter> getByCodePoint(int codePoint) {
 		return Optional.ofNullable(this.byCodePoints.get(codePoint));
 	}
 }
