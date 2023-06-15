@@ -5,30 +5,33 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
 import net.minecraft.client.font.RenderableGlyph;
-import net.vinrobot.seventv.SevenTVMod;
-import net.vinrobot.seventv.client.text.EmoteCharacter;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class EmoteGlyph implements Glyph {
-	private final EmoteCharacter emoteCharacter;
+	private final Emote emote;
 
-	public EmoteGlyph(EmoteCharacter emoteCharacter) {
-		this.emoteCharacter = emoteCharacter;
+	public EmoteGlyph(Emote emote) {
+		this.emote = emote;
 	}
 
 	@Override
 	public float getAdvance() {
-		final int width = this.emoteCharacter.width();
-		final int height = this.emoteCharacter.height();
+		final int width = this.emote.getWidth();
+		final int height = this.emote.getHeight();
 		return width * 9f / height;
 	}
 
 	@Override
 	public GlyphRenderer bake(Function<RenderableGlyph, GlyphRenderer> glyphRendererGetter) {
-		final BufferedImage image = this.emoteCharacter.loadImage();
-		return glyphRendererGetter.apply(new EmoteRenderableGlyph(image));
+		try {
+			final BufferedImage image = this.emote.loadImage();
+			return glyphRendererGetter.apply(new EmoteRenderableGlyph(image));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

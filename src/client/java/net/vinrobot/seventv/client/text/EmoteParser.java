@@ -50,14 +50,14 @@ public class EmoteParser implements CharacterVisitor {
 		}
 
 		String word = this.characters.stream().map(c -> c.content()).collect(Collectors.joining());
-		final Optional<EmoteCharacter> emote = this.emotesManager.getByName(word);
-		return emote.map(this::handleEmote).orElseGet(this::handleText);
+		final Optional<EmotesManager.EmotePair> emotePair = this.emotesManager.getByName(word);
+		return emotePair.map(this::handleEmote).orElseGet(this::handleText);
 	}
 
-	private boolean handleEmote(EmoteCharacter emoteCharacter) {
+	private boolean handleEmote(EmotesManager.EmotePair emote) {
 		this.characters.clear();
 
-		return this.visitor.accept(0, EMOTE_STYLE, emoteCharacter.codePoint());
+		return this.visitor.accept(0, EMOTE_STYLE, emote.codePoint());
 	}
 
 	private boolean handleText() {
