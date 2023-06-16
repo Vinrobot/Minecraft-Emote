@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "net.vinrobot.mcemote.client.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"client": [
+		"ChatHudMixin",
+		"FontManagerMixin",
+		"MinecraftEmoteClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,33 +1,33 @@
 {
 	"schemaVersion": 1,
-	"id": "seventv",
+	"id": "mcemote",
 	"version": "${version}",
-	"name": "7TV",
-	"description": "7TV in Minecraft!",
+	"name": "Minecraft Emote",
+	"description": "7TV, FrankerFaceZ and BetterTV in Minecraft!",
 	"authors": [
 		"Vinrobot"
 	],
 	"contact": {
-		"homepage": "https://github.com/Vinrobot/Minecraft-7TV",
-		"sources": "https://github.com/Vinrobot/Minecraft-7TV",
-		"issues": "https://github.com/Vinrobot/Minecraft-7TV/issues"
+		"homepage": "https://github.com/Vinrobot/Minecraft-Emote",
+		"sources": "https://github.com/Vinrobot/Minecraft-Emote",
+		"issues": "https://github.com/Vinrobot/Minecraft-Emote/issues"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/7tv/icon.png",
+	"icon": "assets/mcemote/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.vinrobot.seventv.SevenTVMod"
+			"net.vinrobot.mcemote.MinecraftEmoteMod"
 		],
 		"client": [
-			"net.vinrobot.seventv.client.SevenTVModClient"
+			"net.vinrobot.mcemote.client.MinecraftEmoteModClient"
 		]
 	},
-	"accessWidener": "7tv.accesswidener",
+	"accessWidener": "mcemote.accesswidener",
 	"mixins": [
-		"7tv.mixins.json",
+		"mcemote.mixins.json",
 		{
-			"config": "7tv.client.mixins.json",
+			"config": "mcemote.client.mixins.json",
 			"environment": "client"
 		}
 	],

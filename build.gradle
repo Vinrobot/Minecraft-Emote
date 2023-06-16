@@ -21,10 +21,10 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 
-	accessWidenerPath = file("src/main/resources/7tv.accesswidener")
+	accessWidenerPath = file("src/main/resources/mcemote.accesswidener")
 
 	mods {
-		"7tv" {
+		"mcemote" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
