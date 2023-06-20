@@ -1,9 +1,10 @@
-# Fabric Example Mod
+# Minecraft Emote
 
-## Setup
+7TV, FrankerFaceZ and BetterTTV emotes in Minecraft!
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+## Install
 
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+1. Install and setup [FabricMC](https://fabricmc.net/) ([wiki](https://fabricmc.net/wiki/player:tutorials:start#installing_fabric_loader))
+2. Download Fabric API from [Modrinth](https://modrinth.com/mod/fabric-api) or [GitHub](https://github.com/FabricMC/fabric) for your Minecraft version
+3. Download release from [Modrinth](https://modrinth.com/mod/minecraft-emote/settings) or [GitHub](https://github.com/Vinrobot/Minecraft-Emote/releases) for your Minecraft version
+4. Install the mods in the .minecraft/mods or using a custom launcher
