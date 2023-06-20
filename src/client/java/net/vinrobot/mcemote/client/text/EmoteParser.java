@@ -49,7 +49,7 @@ public class EmoteParser implements CharacterVisitor {
 			return true;
 		}
 
-		String word = this.characters.stream().map(c -> c.content()).collect(Collectors.joining());
+		String word = this.characters.stream().map(InternalCharacter::content).collect(Collectors.joining());
 		final Optional<EmotesManager.EmotePair> emotePair = this.emotesManager.getByName(word);
 		return emotePair.map(this::handleEmote).orElseGet(this::handleText);
 	}
