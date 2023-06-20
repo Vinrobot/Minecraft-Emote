@@ -2,9 +2,11 @@ package net.vinrobot.mcemote.client.font;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.font.BuiltinEmptyGlyph;
 import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
 import net.minecraft.client.font.RenderableGlyph;
+import net.vinrobot.mcemote.MinecraftEmoteMod;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -27,11 +29,14 @@ public class EmoteGlyph implements Glyph {
 
 	@Override
 	public GlyphRenderer bake(Function<RenderableGlyph, GlyphRenderer> glyphRendererGetter) {
+		final RenderableGlyph glyphRenderer;
 		try {
 			final BufferedImage image = this.emote.loadImage();
-			return glyphRendererGetter.apply(new EmoteRenderableGlyph(image));
+			glyphRenderer = new EmoteRenderableGlyph(image);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			MinecraftEmoteMod.LOGGER.debug("Unable to load emote", e);
+			return BuiltinEmptyGlyph.MISSING.bake(glyphRendererGetter);
 		}
+		return glyphRendererGetter.apply(glyphRenderer);
 	}
 }

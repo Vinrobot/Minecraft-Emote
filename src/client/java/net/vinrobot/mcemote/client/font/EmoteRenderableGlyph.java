@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.RenderableGlyph;
 import net.minecraft.client.texture.NativeImage;
+import net.vinrobot.mcemote.MinecraftEmoteMod;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
@@ -52,8 +53,7 @@ public class EmoteRenderableGlyph implements RenderableGlyph {
 				nativeImage.upload(0, x, y, 0, 0, width, height, true, true, true, false);
 			}
 		} catch (Exception ex) {
-			// Unable to copy/upload the image
-			ex.printStackTrace();
+			MinecraftEmoteMod.LOGGER.debug("Unable to upload glyph", ex);
 		}
 	}
 
