@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class FFZEmote implements Emote {
@@ -35,9 +36,10 @@ public class FFZEmote implements Emote {
 	}
 
 	@Override
-	public BufferedImage loadImage() throws IOException {
-		Map<String, String> urls = this.emoticon.urls();
-		String url = urls.containsKey("1") ? urls.get("1") : urls.values().iterator().next();
-		return ImageIO.read(new URL(url));
+	public Frame[] loadFrames() throws IOException {
+		final Map<String, String> urls = this.emoticon.urls();
+		final String url = urls.containsKey("1") ? urls.get("1") : urls.values().iterator().next();
+		final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
+		return new Frame[]{new Frame(image)};
 	}
 }

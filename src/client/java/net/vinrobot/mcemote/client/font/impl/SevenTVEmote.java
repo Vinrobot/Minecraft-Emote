@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
@@ -46,11 +47,12 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 	}
 
 	@Override
-	public BufferedImage loadImage() throws IOException {
+	public Frame[] loadFrames() throws IOException {
 		final EmoteData data = this.emote.data();
 		final EmoteHost host = data.host();
 		final EmoteFile file = getFile();
 		final String url = "https:" + host.url() + "/" + (data.animated() ? file.static_name() : file.name());
-		return ImageIO.read(new URL(url));
+		final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
+		return new Frame[]{new Frame(image)};
 	}
 }

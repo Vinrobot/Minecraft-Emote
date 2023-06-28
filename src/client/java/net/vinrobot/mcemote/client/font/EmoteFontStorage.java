@@ -41,7 +41,8 @@ public class EmoteFontStorage extends FontStorage {
 			final int height = emote.getHeight();
 			final float advance = width * GLYPH_HEIGHT / height;
 			final float oversample = height / GLYPH_HEIGHT;
-			final BufferedImage bufferedImage = emote.loadImage();
+			final Emote.Frame[] frames = emote.loadFrames();
+			final BufferedImage bufferedImage = frames[0].image();
 			final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(bufferedImage);
 			return new NativeImageGlyph(nativeImage, advance, oversample);
 		} catch (Exception ex) {
