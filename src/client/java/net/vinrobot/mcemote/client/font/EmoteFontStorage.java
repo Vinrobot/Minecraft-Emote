@@ -13,7 +13,9 @@ import net.vinrobot.mcemote.MinecraftEmoteMod;
 import net.vinrobot.mcemote.client.helpers.NativeImageHelper;
 import net.vinrobot.mcemote.client.text.EmotesManager;
 
-import java.awt.image.BufferedImage;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class EmoteFontStorage extends FontStorage {
@@ -21,6 +23,8 @@ public class EmoteFontStorage extends FontStorage {
 	public static final float GLYPH_HEIGHT = 9;
 
 	private final EmotesManager emotesManager;
+	private final Map<Integer, Frames> framesCache = new HashMap<>();
+	private final Map<Glyph, GlyphRenderer> glyphRendererCache = new HashMap<>();
 
 	public EmoteFontStorage(TextureManager textureManager, EmotesManager emotesManager) {
 		super(textureManager, IDENTIFIER);
@@ -28,32 +32,44 @@ public class EmoteFontStorage extends FontStorage {
 	}
 
 	@Override
-	protected FontStorage.GlyphPair findGlyph(int codePoint) {
-		return this.emotesManager.getByCodePoint(codePoint)
-			.map(this::loadGlyph)
-			.map(e -> new FontStorage.GlyphPair(e, e))
-			.orElseGet(() -> super.findGlyph(codePoint));
+	public Glyph getGlyph(int codePoint, boolean validateAdvance) {
+		try {
+			return this.framesCache.computeIfAbsent(codePoint, this::loadAnimationManager)
+				.getFrameAt(Duration.ofMillis(System.currentTimeMillis()))
+				.image();
+		} catch (RuntimeException ex) {
+			return BuiltinEmptyGlyph.MISSING;
+		}
 	}
 
-	protected Glyph loadGlyph(Emote emote) {
+	private Frames loadAnimationManager(Integer integer) {
 		try {
+			final Emote emote = this.emotesManager.getByCodePoint(integer).orElseThrow();
+
 			final int width = emote.getWidth();
 			final int height = emote.getHeight();
 			final float advance = width * GLYPH_HEIGHT / height;
 			final float oversample = height / GLYPH_HEIGHT;
 			final Emote.Frame[] frames = emote.loadFrames();
-			final BufferedImage bufferedImage = frames[0].image();
-			final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(bufferedImage);
-			return new NativeImageGlyph(nativeImage, advance, oversample);
+
+			final Frames.Frame[] animatedFrames = new Frames.Frame[frames.length];
+			for (int i = 0; i < frames.length; i++) {
+				final Emote.Frame frame = frames[i];
+				final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(frame.image());
+				final Glyph glyph = new NativeImageGlyph(nativeImage, advance, oversample);
+				animatedFrames[i] = new Frames.Frame(glyph, frame.duration());
+			}
+
+			return new Frames(animatedFrames);
 		} catch (Exception ex) {
 			MinecraftEmoteMod.LOGGER.error("Unable to load emote", ex);
-			return BuiltinEmptyGlyph.MISSING;
+			throw new RuntimeException(ex);
 		}
 	}
 
 	@Override
-	protected GlyphRenderer findGlyphRenderer(int codePoint) {
+	public GlyphRenderer getGlyphRenderer(int codePoint) {
 		final Glyph glyph = this.getGlyph(codePoint, false);
-		return glyph.bake(this::getGlyphRenderer);
+		return this.glyphRendererCache.computeIfAbsent(glyph, (g) -> g.bake(this::getGlyphRenderer));
 	}
 }

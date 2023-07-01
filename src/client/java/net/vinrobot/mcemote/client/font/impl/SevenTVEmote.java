@@ -6,11 +6,13 @@ import net.vinrobot.mcemote.api.seventv.Emote;
 import net.vinrobot.mcemote.api.seventv.EmoteData;
 import net.vinrobot.mcemote.api.seventv.EmoteFile;
 import net.vinrobot.mcemote.api.seventv.EmoteHost;
+import webpdecoderjn.WebPDecoder;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -51,8 +53,21 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 		final EmoteData data = this.emote.data();
 		final EmoteHost host = data.host();
 		final EmoteFile file = getFile();
-		final String url = "https:" + host.url() + "/" + (data.animated() ? file.static_name() : file.name());
-		final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
-		return new Frame[]{new Frame(image)};
+		final String url = "https:" + host.url() + "/" + file.name();
+		if (data.animated()) {
+			final byte[] bytes = WebPDecoder.getBytesFromURL(new URL(url));
+			final WebPDecoder.WebPImage image = WebPDecoder.decode(bytes);
+
+			final int frameCount = image.frames.size();
+			final Frame[] frames = new Frame[frameCount];
+			for (int i = 0; i < frameCount; ++i) {
+				final WebPDecoder.WebPImageFrame frame = image.frames.get(i);
+				frames[i] = new Frame(frame.img, Duration.ofMillis(frame.delay));
+			}
+			return frames;
+		} else {
+			final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
+			return new Frame[]{new Frame(image)};
+		}
 	}
 }

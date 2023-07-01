@@ -12,6 +12,9 @@ import net.vinrobot.mcemote.client.font.Emote;
 import net.vinrobot.mcemote.client.font.impl.FFZEmote;
 import net.vinrobot.mcemote.client.font.impl.SevenTVEmote;
 import net.vinrobot.mcemote.client.text.EmotesManager;
+import webpdecoderjn.WebPDecoder;
+
+import java.io.IOException;
 
 public class MinecraftEmoteModClient implements ClientModInitializer {
 	public static final EmotesManager EMOTES_MANAGER = new EmotesManager();
@@ -36,6 +39,11 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
+		try {
+			WebPDecoder.init();
+		} catch (IOException e) {
+			MinecraftEmoteMod.LOGGER.error("Failed to initialize WebPDecoder", e);
+		}
 
 		try {
 			{
