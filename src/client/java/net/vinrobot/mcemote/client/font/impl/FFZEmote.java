@@ -2,8 +2,10 @@ package net.vinrobot.mcemote.client.font.impl;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.texture.NativeImage;
 import net.vinrobot.mcemote.api.ffz.Emoticon;
 import net.vinrobot.mcemote.client.font.Emote;
+import net.vinrobot.mcemote.client.helpers.NativeImageHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -40,6 +42,7 @@ public class FFZEmote implements Emote {
 		final Map<String, String> urls = this.emoticon.urls();
 		final String url = urls.containsKey("1") ? urls.get("1") : urls.values().iterator().next();
 		final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
-		return new Frame[]{new Frame(image)};
+		final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(image);
+		return new Frame[]{new Frame(nativeImage)};
 	}
 }

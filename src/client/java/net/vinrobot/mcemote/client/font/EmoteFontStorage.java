@@ -55,8 +55,7 @@ public class EmoteFontStorage extends FontStorage {
 			final Frames.Frame[] animatedFrames = new Frames.Frame[frames.length];
 			for (int i = 0; i < frames.length; i++) {
 				final Emote.Frame frame = frames[i];
-				final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(frame.image());
-				final Glyph glyph = new NativeImageGlyph(nativeImage, advance, oversample);
+				final Glyph glyph = new NativeImageGlyph(frame.image(), advance, oversample);
 				animatedFrames[i] = new Frames.Frame(glyph, frame.duration());
 			}
 

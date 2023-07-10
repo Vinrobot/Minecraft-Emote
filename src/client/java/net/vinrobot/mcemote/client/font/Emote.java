@@ -1,6 +1,7 @@
 package net.vinrobot.mcemote.client.font;
 
-import java.awt.image.BufferedImage;
+import net.minecraft.client.texture.NativeImage;
+
 import java.io.IOException;
 import java.time.Duration;
 
@@ -13,8 +14,8 @@ public interface Emote {
 
 	Frame[] loadFrames() throws IOException;
 
-	record Frame(BufferedImage image, Duration duration) {
-		public Frame(BufferedImage image) {
+	record Frame(NativeImage image, Duration duration) {
+		public Frame(NativeImage image) {
 			this(image, Duration.ofDays(1));
 		}
 	}

@@ -2,10 +2,12 @@ package net.vinrobot.mcemote.client.font.impl;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.texture.NativeImage;
 import net.vinrobot.mcemote.api.seventv.Emote;
 import net.vinrobot.mcemote.api.seventv.EmoteData;
 import net.vinrobot.mcemote.api.seventv.EmoteFile;
 import net.vinrobot.mcemote.api.seventv.EmoteHost;
+import net.vinrobot.mcemote.client.helpers.NativeImageHelper;
 import webpdecoderjn.WebPDecoder;
 
 import javax.imageio.ImageIO;
@@ -62,12 +64,14 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 			final Frame[] frames = new Frame[frameCount];
 			for (int i = 0; i < frameCount; ++i) {
 				final WebPDecoder.WebPImageFrame frame = image.frames.get(i);
-				frames[i] = new Frame(frame.img, Duration.ofMillis(frame.delay));
+				final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(frame.img);
+				frames[i] = new Frame(nativeImage, Duration.ofMillis(frame.delay));
 			}
 			return frames;
 		} else {
 			final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
-			return new Frame[]{new Frame(image)};
+			final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(image);
+			return new Frame[]{new Frame(nativeImage)};
 		}
 	}
 }
