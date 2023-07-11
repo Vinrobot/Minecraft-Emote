@@ -9,6 +9,8 @@ import net.vinrobot.mcemote.api.seventv.EmoteFile;
 import net.vinrobot.mcemote.api.seventv.EmoteHost;
 import net.vinrobot.mcemote.client.helpers.NativeImageHelper;
 import webpdecoderjn.WebPDecoder;
+import webpdecoderjn.WebPImage;
+import webpdecoderjn.WebPImageFrame;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -57,13 +59,12 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 		final EmoteFile file = getFile();
 		final String url = "https:" + host.url() + "/" + file.name();
 		if (data.animated()) {
-			final byte[] bytes = WebPDecoder.getBytesFromURL(new URL(url));
-			final WebPDecoder.WebPImage image = WebPDecoder.decode(bytes);
+			final WebPImage image = WebPDecoder.decode(new URL(url));
 
 			final int frameCount = image.frames.size();
 			final Frame[] frames = new Frame[frameCount];
 			for (int i = 0; i < frameCount; ++i) {
-				final WebPDecoder.WebPImageFrame frame = image.frames.get(i);
+				final WebPImageFrame frame = image.frames.get(i);
 				final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(frame.img);
 				frames[i] = new Frame(nativeImage, Duration.ofMillis(frame.delay));
 			}
