@@ -3,8 +3,11 @@ package net.vinrobot.mcemote.client.text;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.text.CharacterVisitor;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.vinrobot.mcemote.client.font.EmoteFontStorage;
 
 import java.util.Iterator;
@@ -57,7 +60,16 @@ public class EmoteParser implements CharacterVisitor {
 	private boolean handleEmote(EmotesManager.EmotePair emote) {
 		this.characters.clear();
 
-		return this.visitor.accept(0, EMOTE_STYLE, emote.codePoint());
+		final String emoteName = emote.emote().getName();
+
+		final Style style = EMOTE_STYLE
+			.withInsertion(emoteName)
+			.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, emoteName))
+			.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(emoteName)));
+
+		// TODO: Provide custom info in HoverEvent text, e.g., emote provider name
+
+		return this.visitor.accept(0, style, emote.codePoint());
 	}
 
 	private boolean handleText() {
