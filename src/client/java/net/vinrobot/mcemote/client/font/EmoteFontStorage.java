@@ -1,21 +1,18 @@
 package net.vinrobot.mcemote.client.font;
 
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.BuiltinEmptyGlyph;
 import net.minecraft.client.font.FontStorage;
 import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
-import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.vinrobot.mcemote.MinecraftEmoteMod;
-import net.vinrobot.mcemote.client.helpers.NativeImageHelper;
 import net.vinrobot.mcemote.client.text.EmotesManager;
-
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class EmoteFontStorage extends FontStorage {
@@ -23,7 +20,7 @@ public class EmoteFontStorage extends FontStorage {
 	public static final float GLYPH_HEIGHT = 9;
 
 	private final EmotesManager emotesManager;
-	private final Map<Integer, Frames> framesCache = new HashMap<>();
+	private final Map<Integer, AnimatedGlyph> framesCache = new HashMap<>();
 	private final Map<Glyph, GlyphRenderer> glyphRendererCache = new HashMap<>();
 
 	public EmoteFontStorage(TextureManager textureManager, EmotesManager emotesManager) {
@@ -34,17 +31,16 @@ public class EmoteFontStorage extends FontStorage {
 	@Override
 	public Glyph getGlyph(int codePoint, boolean validateAdvance) {
 		try {
-			return this.framesCache.computeIfAbsent(codePoint, this::loadAnimationManager)
-				.getFrameAt(Duration.ofMillis(System.currentTimeMillis()))
-				.image();
+			return this.framesCache.computeIfAbsent(codePoint, this::loadAnimatedGlyph)
+				.getGlyphAt(Instant.now());
 		} catch (RuntimeException ex) {
 			return BuiltinEmptyGlyph.MISSING;
 		}
 	}
 
-	private Frames loadAnimationManager(Integer integer) {
+	private AnimatedGlyph loadAnimatedGlyph(int codePoint) {
 		try {
-			final Emote emote = this.emotesManager.getByCodePoint(integer).orElseThrow();
+			final Emote emote = this.emotesManager.getByCodePoint(codePoint).orElseThrow();
 
 			final int width = emote.getWidth();
 			final int height = emote.getHeight();
@@ -52,14 +48,14 @@ public class EmoteFontStorage extends FontStorage {
 			final float oversample = height / GLYPH_HEIGHT;
 			final Emote.Frame[] frames = emote.loadFrames();
 
-			final Frames.Frame[] animatedFrames = new Frames.Frame[frames.length];
+			final AnimatedGlyph.Frame[] animatedFrames = new AnimatedGlyph.Frame[frames.length];
 			for (int i = 0; i < frames.length; i++) {
 				final Emote.Frame frame = frames[i];
 				final Glyph glyph = new NativeImageGlyph(frame.image(), advance, oversample);
-				animatedFrames[i] = new Frames.Frame(glyph, frame.duration());
+				animatedFrames[i] = new AnimatedGlyph.Frame(glyph, frame.duration());
 			}
 
-			return new Frames(animatedFrames);
+			return new AnimatedGlyph(animatedFrames);
 		} catch (Exception ex) {
 			MinecraftEmoteMod.LOGGER.error("Unable to load emote", ex);
 			throw new RuntimeException(ex);
