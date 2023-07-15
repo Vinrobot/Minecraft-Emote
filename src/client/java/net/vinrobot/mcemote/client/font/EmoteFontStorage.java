@@ -3,6 +3,11 @@ package net.vinrobot.mcemote.client.font;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.BuiltinEmptyGlyph;
@@ -12,6 +17,7 @@ import net.minecraft.client.font.GlyphRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.vinrobot.mcemote.MinecraftEmoteMod;
+import net.vinrobot.mcemote.client.helpers.FutureHelper;
 import net.vinrobot.mcemote.client.text.EmotesManager;
 
 @Environment(EnvType.CLIENT)
@@ -20,8 +26,9 @@ public class EmoteFontStorage extends FontStorage {
 	public static final float GLYPH_HEIGHT = 9;
 
 	private final EmotesManager emotesManager;
-	private final Map<Integer, AnimatedGlyph> framesCache = new HashMap<>();
+	private final Map<Integer, Future<AnimatedGlyph>> framesCache = new HashMap<>();
 	private final Map<Glyph, GlyphRenderer> glyphRendererCache = new HashMap<>();
+	private final ExecutorService executorService = new ThreadPoolExecutor(1, 10, 30, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 
 	public EmoteFontStorage(TextureManager textureManager, EmotesManager emotesManager) {
 		super(textureManager, IDENTIFIER);
@@ -31,11 +38,16 @@ public class EmoteFontStorage extends FontStorage {
 	@Override
 	public Glyph getGlyph(int codePoint, boolean validateAdvance) {
 		try {
-			return this.framesCache.computeIfAbsent(codePoint, this::loadAnimatedGlyph)
-				.getGlyphAt(Instant.now());
+			return FutureHelper.asOptional(this.framesCache.computeIfAbsent(codePoint, this::asyncLoadAnimatedGlyph))
+				.map(m -> m.getGlyphAt(Instant.now()))
+				.orElse(BuiltinEmptyGlyph.MISSING);
 		} catch (RuntimeException ex) {
 			return BuiltinEmptyGlyph.MISSING;
 		}
+	}
+
+	private Future<AnimatedGlyph> asyncLoadAnimatedGlyph(int codePoint) {
+		return this.executorService.submit(() -> this.loadAnimatedGlyph(codePoint));
 	}
 
 	private AnimatedGlyph loadAnimatedGlyph(int codePoint) {
