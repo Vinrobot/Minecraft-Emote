@@ -23,7 +23,7 @@ import net.vinrobot.mcemote.client.text.EmotesManager;
 @Environment(EnvType.CLIENT)
 public class EmoteFontStorage extends FontStorage {
 	public static final Identifier IDENTIFIER = new Identifier("mcemote.fonts", "emotes");
-	public static final float GLYPH_HEIGHT = 9;
+	public static final float GLYPH_HEIGHT = 8;
 
 	private final EmotesManager emotesManager;
 	private final Map<Integer, Future<AnimatedGlyph>> framesCache = new HashMap<>();
