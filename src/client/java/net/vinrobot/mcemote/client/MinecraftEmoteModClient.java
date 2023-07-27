@@ -8,6 +8,8 @@ import net.vinrobot.mcemote.client.providers.IEmoteProvider;
 import net.vinrobot.mcemote.client.providers.STVGlobalEmoteProvider;
 import net.vinrobot.mcemote.client.providers.STVUserEmoteProvider;
 import net.vinrobot.mcemote.client.text.EmotesManager;
+import net.vinrobot.mcemote.config.Configuration;
+import net.vinrobot.mcemote.config.impl.ConfigurationImpl;
 import webpdecoderjn.WebPLoader;
 
 import java.io.IOException;
@@ -16,7 +18,6 @@ import java.util.List;
 
 public class MinecraftEmoteModClient implements ClientModInitializer {
 	public static final EmotesManager EMOTES_MANAGER = new EmotesManager();
-	public static final String SCRAPIE_TWITCH_ID = "40646018";
 
 	@Override
 	public void onInitializeClient() {
@@ -27,10 +28,11 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 			MinecraftEmoteMod.LOGGER.error("Failed to initialize WebPDecoder", e);
 		}
 
+		final Configuration config = new ConfigurationImpl();
 		final IEmoteProvider[] providers = new IEmoteProvider[]{
 			new STVGlobalEmoteProvider(),
-			new STVUserEmoteProvider(SCRAPIE_TWITCH_ID),
-			new FFZRoomEmoteProvider(SCRAPIE_TWITCH_ID),
+			new STVUserEmoteProvider(),
+			new FFZRoomEmoteProvider(),
 		};
 
 		int codePoint = 100;
@@ -42,7 +44,7 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 				// "Register" emotes in a temporary list
 				// If an exception is thrown, the emotes will not be added to the manager
 				final List<Emote> emotes = new ArrayList<>();
-				provider.registerEmotes(emotes::add);
+				provider.registerEmotes(config, emotes::add);
 
 				for (final Emote emote : emotes) {
 					EMOTES_MANAGER.addEmote(codePoint++, emote);
