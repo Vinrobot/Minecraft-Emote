@@ -8,6 +8,11 @@ import java.io.IOException;
 
 public class STVGlobalEmoteProvider implements IEmoteProvider {
 	@Override
+	public int priority() {
+		return 10;
+	}
+
+	@Override
 	public void registerEmotes(Configuration config, IEmoteRegistry registry) throws IOException, InterruptedException {
 		final SevenTVService service = new SevenTVService();
 

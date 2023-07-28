@@ -3,10 +3,8 @@ package net.vinrobot.mcemote.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.vinrobot.mcemote.MinecraftEmoteMod;
 import net.vinrobot.mcemote.client.font.Emote;
-import net.vinrobot.mcemote.client.providers.FFZRoomEmoteProvider;
+import net.vinrobot.mcemote.client.helpers.ListHelper;
 import net.vinrobot.mcemote.client.providers.IEmoteProvider;
-import net.vinrobot.mcemote.client.providers.STVGlobalEmoteProvider;
-import net.vinrobot.mcemote.client.providers.STVUserEmoteProvider;
 import net.vinrobot.mcemote.client.text.EmotesManager;
 import net.vinrobot.mcemote.config.Configuration;
 import net.vinrobot.mcemote.config.impl.ConfigurationImpl;
@@ -15,6 +13,7 @@ import webpdecoderjn.WebPLoader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 
 public class MinecraftEmoteModClient implements ClientModInitializer {
 	public static final EmotesManager EMOTES_MANAGER = new EmotesManager();
@@ -29,11 +28,8 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 		}
 
 		final Configuration config = new ConfigurationImpl();
-		final IEmoteProvider[] providers = new IEmoteProvider[]{
-			new STVGlobalEmoteProvider(),
-			new STVUserEmoteProvider(),
-			new FFZRoomEmoteProvider(),
-		};
+		final ServiceLoader<IEmoteProvider> serviceLoader = ServiceLoader.load(IEmoteProvider.class);
+		final List<IEmoteProvider> providers = ListHelper.sort(serviceLoader);
 
 		int codePoint = 100;
 
