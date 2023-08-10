@@ -21,6 +21,9 @@
 		],
 		"client": [
 			"net.vinrobot.mcemote.client.MinecraftEmoteModClient"
+		],
+		"modmenu": [
+			"net.vinrobot.mcemote.client.MinecraftEmoteModMenuApi"
 		]
 	},
 	"accessWidener": "mcemote.accesswidener",
