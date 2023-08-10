@@ -6,7 +6,7 @@ import net.vinrobot.mcemote.config.Option;
 public final class ConfigurationImpl implements Configuration {
 	private static final String SCRAPIE_TWITCH_ID = "40646018";
 
-	private final Option<String> twitchId = Option.of(SCRAPIE_TWITCH_ID);
+	private final Option<String> twitchId = new TwitchIdOptionImpl(SCRAPIE_TWITCH_ID);
 
 	@Override
 	public Option<String> twitchId() {

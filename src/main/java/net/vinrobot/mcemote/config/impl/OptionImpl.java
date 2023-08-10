@@ -15,6 +15,7 @@ public class OptionImpl<T> implements Option<T> {
 
 	@Override
 	public Option<T> set(final Optional<T> value) {
+		value.ifPresent(this::validate);
 		this.value = Objects.requireNonNull(value);
 		return this;
 	}

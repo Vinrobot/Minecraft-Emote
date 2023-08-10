@@ -2,6 +2,7 @@ package net.vinrobot.mcemote.config;
 
 import net.vinrobot.mcemote.config.impl.OptionImpl;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public interface Option<T> {
@@ -71,4 +72,30 @@ public interface Option<T> {
 	 * @return The default value of this option.
 	 */
 	T getDefault();
+
+	/**
+	 * Validate the value of this option.
+	 *
+	 * @param value The value to validate.
+	 * @throws ValidationFailedException If the validation fails.
+	 */
+	default void validate(final T value) throws ValidationFailedException {
+		Objects.requireNonNull(value);
+	}
+
+	/**
+	 * Check if the value of this option is valid.
+	 *
+	 * @see #validate(T)
+	 * @param value The value to check.
+	 * @return True if the value is valid, false otherwise.
+	 */
+	default boolean isValid(final T value) {
+		try {
+			this.validate(value);
+			return true;
+		} catch (ValidationFailedException e) {
+			return false;
+		}
+	}
 }
