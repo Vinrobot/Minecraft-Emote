@@ -1,13 +1,13 @@
 package net.vinrobot.mcemote.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.vinrobot.mcemote.MinecraftEmote;
 import net.vinrobot.mcemote.MinecraftEmoteMod;
 import net.vinrobot.mcemote.client.font.Emote;
 import net.vinrobot.mcemote.client.helpers.ListHelper;
 import net.vinrobot.mcemote.client.providers.IEmoteProvider;
 import net.vinrobot.mcemote.client.text.EmotesManager;
 import net.vinrobot.mcemote.config.Configuration;
-import net.vinrobot.mcemote.config.ConfigurationService;
 import webpdecoderjn.WebPLoader;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 			MinecraftEmoteMod.LOGGER.error("Failed to initialize WebPDecoder", e);
 		}
 
-		final Configuration config = loadConfiguration(MinecraftEmoteMod.getConfigService());
+		final Configuration config = MinecraftEmote.getInstance().getConfigManager().getConfig();
 		final ServiceLoader<IEmoteProvider> serviceLoader = ServiceLoader.load(IEmoteProvider.class);
 		final List<IEmoteProvider> providers = ListHelper.sort(serviceLoader);
 
@@ -50,16 +50,6 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 			} catch (Exception e) {
 				MinecraftEmoteMod.LOGGER.error("Failed to register emotes from provider " + providerName, e);
 			}
-		}
-	}
-
-	private Configuration loadConfiguration(final ConfigurationService service) {
-		try {
-			MinecraftEmoteMod.LOGGER.info("Loading config");
-			return service.load();
-		} catch (final IOException e) {
-			MinecraftEmoteMod.LOGGER.error("Failed to load config", e);
-			return service.create();
 		}
 	}
 }
