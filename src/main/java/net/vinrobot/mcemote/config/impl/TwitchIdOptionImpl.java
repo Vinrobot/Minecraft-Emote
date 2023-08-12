@@ -12,8 +12,8 @@ public class TwitchIdOptionImpl extends OptionImpl<String> {
 		super.validate(value);
 
 		final int length = value.length();
-		if (length == 0 || 8 < length) {
-			throw new ValidationFailedException("Twitch ID must be between 1 and 8 digits");
+		if (length == 0) {
+			throw new ValidationFailedException("Twitch ID cannot be empty");
 		}
 
 		try {
