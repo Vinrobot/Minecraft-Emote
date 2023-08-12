@@ -11,13 +11,6 @@
 
 ## Usage
 
-### Configuration
-
-Currently, you cannot configure the mod.
-This will be added in the future.
-In the meantime, the mod is configured to use the emotes used on Scrapie's Twitch channel.
-(Twicth ID: 40646018)
-
 ### Emotes
 
 Currently, the mod supports 7TV and FrankerFaceZ emotes.
@@ -25,3 +18,39 @@ They can be used by typing `emote_name` in chat.
 For example, `peepoHey` will be replaced with the ![peepoHey](https://cdn.7tv.app/emote/60aeec1712d7701491f89cf5/1x.gif) emote.
 
 **Warning:** This is only client-side, so other players will only see the emote if they have the mod installed.
+
+### Configuration
+
+The mod can be configured using the ModMenu mod or by editing the configuration file.
+
+#### ModMenu
+
+The mod can be configured using [ModMenu](https://modrinth.com/mod/modmenu) ([GitHub](https://github.com/TerraformersMC/ModMenu)).
+To open the configuration, click on the mod in the mod list and then on the config button.
+
+![Configuration](./docs/config.png)
+
+The `Twitch ID` is the ID of the Twitch channel you want to use for the emotes.
+The Twitch ID **is not** the name of the channel.
+
+To get the ID, you can use [this website](https://streamscharts.com/tools/convert-username).
+
+I will add a way to get the ID in-game in the future.
+
+#### File
+
+The configuration file is located in `.minecraft/config/mcemote.json`.
+If modified, the game must be restarted for the changes to take effect.
+
+The content is the following:
+
+```json
+{
+	"twitchId": "40646018"
+}
+```
+
+The `twitchId` is the ID of the Twitch channel you want to use for the emotes.
+The Twitch ID **is not** the name of the channel.
+
+To get the ID, you can use [this website](https://streamscharts.com/tools/convert-username).
