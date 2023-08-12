@@ -56,10 +56,10 @@ dependencies {
 	modClientCompileOnly "com.terraformersmc:modmenu:7.2.1"
 
 	// WebP support for ImageIO, not fully working with animated WebP
-	modImplementation "com.twelvemonkeys.imageio:imageio-webp:3.9.4"
+	modClientImplementation "com.twelvemonkeys.imageio:imageio-webp:3.9.4"
 
 	// WebP support for animated WebP using official Google's native library
-	modImplementation "com.github.Vinrobot.WebPDecoderJN:lib:1.3"
+	modClientImplementation "com.github.Vinrobot.WebPDecoderJN:lib:1.3"
 }
 
 processResources {
