@@ -8,6 +8,7 @@ import net.vinrobot.mcemote.client.helpers.ListHelper;
 import net.vinrobot.mcemote.client.providers.IEmoteProvider;
 import net.vinrobot.mcemote.client.text.EmotesManager;
 import net.vinrobot.mcemote.config.Configuration;
+import net.vinrobot.mcemote.config.ConfigurationManager;
 import webpdecoderjn.WebPLoader;
 
 import java.io.IOException;
@@ -27,7 +28,18 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 			MinecraftEmoteMod.LOGGER.error("Failed to initialize WebPDecoder", e);
 		}
 
-		final Configuration config = MinecraftEmote.getInstance().getConfigManager().getConfig();
+		final ConfigurationManager configManager = MinecraftEmote.getInstance().getConfigManager();
+
+		configManager.onChange((config) -> {
+			EMOTES_MANAGER.clearEmotes();
+			this.registerEmotes(EMOTES_MANAGER, config);
+		});
+
+		// Load config at startup
+		configManager.getConfig();
+	}
+
+	private void registerEmotes(final EmotesManager manager, final Configuration config) {
 		final ServiceLoader<IEmoteProvider> serviceLoader = ServiceLoader.load(IEmoteProvider.class);
 		final List<IEmoteProvider> providers = ListHelper.sort(serviceLoader);
 
@@ -41,7 +53,7 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 				provider.registerEmotes(config, emotes::add);
 
 				for (final Emote emote : emotes) {
-					EMOTES_MANAGER.addEmote(emote);
+					manager.addEmote(emote);
 				}
 
 				MinecraftEmoteMod.LOGGER.info("Registered " + emotes.size() + " emotes from provider " + providerName);

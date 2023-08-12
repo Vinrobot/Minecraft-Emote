@@ -1,10 +1,13 @@
 package net.vinrobot.mcemote.config;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static net.vinrobot.mcemote.MinecraftEmoteMod.LOGGER;
 
 public class ConfigurationManager {
+	private final Set<ChangeCallback> changeCallbacks = new LinkedHashSet<>();
 	private final ConfigurationService configService;
 	private Configuration configuration;
 
@@ -25,12 +28,16 @@ public class ConfigurationManager {
 		} catch (final IOException e) {
 			LOGGER.error("Failed to load config", e);
 			return this.configuration = service.create();
+		} finally {
+			this.triggerOnChange();
 		}
 	}
 
 	public void save() {
 		final Configuration config = this.configuration;
 		if (config != null) {
+			this.triggerOnChange();
+
 			try {
 				this.configService.save(config);
 			} catch (final IOException e) {
@@ -41,5 +48,19 @@ public class ConfigurationManager {
 
 	public void reset() {
 		this.configuration = this.configService.create();
+	}
+
+	public void onChange(final ChangeCallback callback) {
+		this.changeCallbacks.add(callback);
+	}
+
+	public void triggerOnChange() {
+		for (final ChangeCallback callback : this.changeCallbacks) {
+			callback.onChange(this.configuration);
+		}
+	}
+
+	public interface ChangeCallback {
+		void onChange(Configuration config);
 	}
 }
