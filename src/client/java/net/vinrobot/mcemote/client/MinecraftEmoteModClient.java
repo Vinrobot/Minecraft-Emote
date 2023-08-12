@@ -31,8 +31,6 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 		final ServiceLoader<IEmoteProvider> serviceLoader = ServiceLoader.load(IEmoteProvider.class);
 		final List<IEmoteProvider> providers = ListHelper.sort(serviceLoader);
 
-		int codePoint = 100;
-
 		for (final IEmoteProvider provider : providers) {
 			final String providerName = provider.getClass().getName();
 
@@ -43,7 +41,7 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 				provider.registerEmotes(config, emotes::add);
 
 				for (final Emote emote : emotes) {
-					EMOTES_MANAGER.addEmote(codePoint++, emote);
+					EMOTES_MANAGER.addEmote(emote);
 				}
 
 				MinecraftEmoteMod.LOGGER.info("Registered " + emotes.size() + " emotes from provider " + providerName);

@@ -13,7 +13,10 @@ public class EmotesManager {
 	private final Map<String, EmotePair> emoteByNames = new HashMap<>();
 	private final Map<Integer, EmotePair> emoteByCodePoints = new HashMap<>();
 
-	public EmotePair addEmote(int codePoint, Emote emote) {
+	private int nextCodePoint = 1;
+
+	public EmotePair addEmote(Emote emote) {
+		final int codePoint = this.nextCodePoint++;
 		final String name = emote.getName();
 		final EmotePair emotePair = new EmotePair(codePoint, emote);
 
@@ -37,6 +40,13 @@ public class EmotesManager {
 			.map(EmotePair::emote)
 			.map(Emote::getName)
 			.map(this.emoteByNames::remove);
+	}
+
+	public void clearEmotes() {
+		// Don't reset nextCodePoint, so that new emotes will have
+		// unique code points during the entire life of this object.
+		this.emoteByNames.clear();
+		this.emoteByCodePoints.clear();
 	}
 
 	public Optional<EmotePair> getByName(String name) {

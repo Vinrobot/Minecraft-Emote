@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.text.CharacterVisitor;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -35,6 +36,19 @@ public class EmoteParser implements CharacterVisitor {
 			boolean rt = orderedText.accept(parser);
 			return rt && parser.flush();
 		};
+	}
+
+	public static Text wrapText(Text text, EmotesManager emotesManager) {
+		final OrderedText orderedText = wrapOrderedText(text.asOrderedText(), emotesManager);
+
+		final MutableText mutableText = Text.empty();
+		orderedText.accept((index, style, codePoint) -> {
+			final String character = String.valueOf(Character.toChars(codePoint));
+			mutableText.append(Text.literal(character).setStyle(style));
+			return true;
+		});
+
+		return mutableText;
 	}
 
 	@Override
