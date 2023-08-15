@@ -1,15 +1,17 @@
 package net.examplemod.mixin;
 
-import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(TitleScreen.class)
-public class MixinTitleScreen {
-	@Inject(at = @At("HEAD"), method = "init()V")
+import static net.examplemod.ExampleMod.LOGGER;
+
+@Mixin(MinecraftServer.class)
+public class ExampleMixin {
+	@Inject(at = @At("HEAD"), method = "loadWorld")
 	private void init(CallbackInfo info) {
-		System.out.println("Hello from example architectury common mixin!");
+		LOGGER.info(this.getClass().getName() + "#init");
 	}
 }

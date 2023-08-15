@@ -17,11 +17,22 @@
 	"entrypoints": {
 		"main": [
 			"net.examplemod.fabric.ExampleModFabric"
+		],
+		"client": [
+			"net.examplemod.client.fabric.ExampleModClientFabric"
 		]
 	},
 	"mixins": [
+		"examplemod-common.mixins.json",
 		"examplemod.mixins.json",
-		"examplemod-common.mixins.json"
+		{
+			"config": "examplemod-common.client.mixins.json",
+			"environment": "client"
+		},
+		{
+			"config": "examplemod.client.mixins.json",
+			"environment": "client"
+		}
 	],
 	"depends": {
 		"fabric": "*",

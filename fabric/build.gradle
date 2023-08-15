@@ -9,6 +9,15 @@ architectury {
 
 loom {
 	accessWidenerPath = project(":common").loom.accessWidenerPath
+
+	splitEnvironmentSourceSets()
+
+	mods {
+		examplemod {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
 }
 
 configurations {
@@ -25,6 +34,7 @@ dependencies {
 	// Remove the next line if you don't want to depend on the API
 	modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
+	clientImplementation project(":common").sourceSets.client.output
 	common(project(path: ":common", configuration: "namedElements")) { transitive false }
 	shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }

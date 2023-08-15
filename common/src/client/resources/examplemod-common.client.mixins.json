@@ -1,10 +1,10 @@
 {
 	"required": true,
-	"package": "net.examplemod.mixin",
+	"package": "net.examplemod.client.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"minVersion": "0.8",
-	"mixins": [
-		"ExampleMixin"
+	"client": [
+		"ExampleClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

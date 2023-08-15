@@ -4,6 +4,15 @@ architectury {
 
 loom {
 	accessWidenerPath = file("src/main/resources/examplemod.accesswidener")
+
+	splitEnvironmentSourceSets()
+
+	mods {
+		examplemod {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
 }
 
 dependencies {
