@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[45,)"
+loaderVersion = "[46,)"
 #issueTrackerURL = ""
 license = "Insert License Here"
 
@@ -11,25 +11,25 @@ authors = "Me!"
 description = '''
 This is an example description! Tell everyone what your mod is about!
 '''
-#logoFile = ""
+logoFile = "examplemod_logo.png"
 
 [[dependencies.examplemod]]
 modId = "forge"
 mandatory = true
-versionRange = "[45,)"
+versionRange = "[46,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.examplemod]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.4,)"
+versionRange = "[1.20.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.examplemod]]
 modId = "architectury"
 mandatory = true
-versionRange = "[8.1.79,)"
+versionRange = "[9.1.12,)"
 ordering = "AFTER"
 side = "BOTH"
