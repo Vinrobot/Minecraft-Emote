@@ -2,7 +2,6 @@ package net.vinrobot.mcemote.client.providers;
 
 import net.vinrobot.mcemote.api.FrankerFaceZService;
 import net.vinrobot.mcemote.api.ffz.Platform;
-import net.vinrobot.mcemote.client.font.impl.FFZEmote;
 import net.vinrobot.mcemote.config.Configuration;
 
 import java.io.IOException;

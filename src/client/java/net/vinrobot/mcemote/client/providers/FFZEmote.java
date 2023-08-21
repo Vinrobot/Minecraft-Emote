@@ -1,4 +1,4 @@
-package net.vinrobot.mcemote.client.font.impl;
+package net.vinrobot.mcemote.client.providers;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

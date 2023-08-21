@@ -1,3 +1,4 @@
 net.vinrobot.mcemote.client.providers.STVGlobalEmoteProvider
 net.vinrobot.mcemote.client.providers.STVUserEmoteProvider
+net.vinrobot.mcemote.client.providers.FFZGlobalEmoteProvider
 net.vinrobot.mcemote.client.providers.FFZRoomEmoteProvider

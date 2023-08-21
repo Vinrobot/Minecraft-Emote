@@ -1,7 +1,6 @@
 package net.vinrobot.mcemote.client.providers;
 
 import net.vinrobot.mcemote.api.SevenTVService;
-import net.vinrobot.mcemote.client.font.impl.SevenTVEmote;
 import net.vinrobot.mcemote.config.Configuration;
 
 import java.io.IOException;
