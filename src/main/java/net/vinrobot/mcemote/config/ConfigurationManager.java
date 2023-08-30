@@ -1,6 +1,8 @@
 package net.vinrobot.mcemote.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -25,6 +27,12 @@ public class ConfigurationManager {
 		try {
 			LOGGER.info("Loading config");
 			return this.configuration = service.load();
+		} catch (final NoSuchFileException e) {
+			LOGGER.warn("Config file not found: {}", e.getFile());
+			return this.configuration = service.create();
+		} catch (final FileNotFoundException e) {
+			LOGGER.warn("Config file not found");
+			return this.configuration = service.create();
 		} catch (final IOException e) {
 			LOGGER.error("Failed to load config", e);
 			return this.configuration = service.create();
