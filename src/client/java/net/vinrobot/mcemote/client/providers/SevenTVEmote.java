@@ -2,23 +2,16 @@ package net.vinrobot.mcemote.client.providers;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.texture.NativeImage;
 import net.vinrobot.mcemote.api.seventv.Emote;
 import net.vinrobot.mcemote.api.seventv.EmoteData;
 import net.vinrobot.mcemote.api.seventv.EmoteFile;
 import net.vinrobot.mcemote.api.seventv.EmoteHost;
-import net.vinrobot.mcemote.client.helpers.NativeImageHelper;
-import webpdecoderjn.WebPDecoder;
-import webpdecoderjn.WebPImage;
-import webpdecoderjn.WebPImageFrame;
+import net.vinrobot.mcemote.client.imageio.NativeFrame;
+import net.vinrobot.mcemote.client.imageio.NativeImageIO;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.util.Comparator;
-import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
@@ -53,26 +46,11 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 	}
 
 	@Override
-	public Frame[] loadFrames() throws IOException {
+	public NativeFrame[] loadFrames() throws IOException {
 		final EmoteData data = this.emote.data();
 		final EmoteHost host = data.host();
 		final EmoteFile file = getFile();
 		final String url = "https:" + host.url() + "/" + file.name();
-		if (data.animated()) {
-			final WebPImage image = WebPDecoder.decode(new URL(url));
-
-			final int frameCount = image.frames.size();
-			final Frame[] frames = new Frame[frameCount];
-			for (int i = 0; i < frameCount; ++i) {
-				final WebPImageFrame frame = image.frames.get(i);
-				final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(frame.img);
-				frames[i] = new Frame(nativeImage, Duration.ofMillis(frame.delay));
-			}
-			return frames;
-		} else {
-			final BufferedImage image = Objects.requireNonNull(ImageIO.read(new URL(url)));
-			final NativeImage nativeImage = NativeImageHelper.fromBufferedImage(image);
-			return new Frame[]{new Frame(nativeImage)};
-		}
+		return NativeImageIO.readAll(new URL(url));
 	}
 }

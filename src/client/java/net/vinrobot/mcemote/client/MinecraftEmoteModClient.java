@@ -9,9 +9,7 @@ import net.vinrobot.mcemote.client.providers.IEmoteProvider;
 import net.vinrobot.mcemote.client.text.EmotesManager;
 import net.vinrobot.mcemote.config.Configuration;
 import net.vinrobot.mcemote.config.ConfigurationManager;
-import webpdecoderjn.WebPLoader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -21,13 +19,6 @@ public class MinecraftEmoteModClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
-		try {
-			WebPLoader.init();
-		} catch (IOException e) {
-			MinecraftEmoteMod.LOGGER.error("Failed to initialize WebPDecoder", e);
-		}
-
 		final ConfigurationManager configManager = MinecraftEmote.getInstance().getConfigManager();
 
 		configManager.onChange((config) -> {

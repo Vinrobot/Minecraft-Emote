@@ -1,9 +1,10 @@
 package net.vinrobot.mcemote.client.font;
 
+import net.minecraft.client.font.Glyph;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.stream.Stream;
-import net.minecraft.client.font.Glyph;
 
 public class AnimatedGlyph {
 	private final Frame[] frames;
@@ -14,6 +15,7 @@ public class AnimatedGlyph {
 		this.loopTime = Stream.of(frames)
 			.map(Frame::duration)
 			.reduce(Duration::plus)
+			.filter(d -> !d.isZero())
 			.orElse(Duration.ofDays(1));
 	}
 
@@ -23,6 +25,10 @@ public class AnimatedGlyph {
 	}
 
 	public Glyph getGlyphAt(Instant at) {
+		if (this.frames.length == 1) {
+			return this.frames[0].image();
+		}
+
 		final Duration time = modulo(at, loopTime);
 
 		Duration current = Duration.ZERO;

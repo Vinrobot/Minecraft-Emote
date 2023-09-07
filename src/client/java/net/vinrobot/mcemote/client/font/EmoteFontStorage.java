@@ -1,13 +1,5 @@
 package net.vinrobot.mcemote.client.font;
 
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.BuiltinEmptyGlyph;
@@ -18,7 +10,17 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 import net.vinrobot.mcemote.MinecraftEmoteMod;
 import net.vinrobot.mcemote.client.helpers.FutureHelper;
+import net.vinrobot.mcemote.client.imageio.NativeFrame;
 import net.vinrobot.mcemote.client.text.EmotesManager;
+
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @Environment(EnvType.CLIENT)
 public class EmoteFontStorage extends FontStorage {
@@ -58,11 +60,11 @@ public class EmoteFontStorage extends FontStorage {
 			final int height = emote.getHeight();
 			final float advance = width * GLYPH_HEIGHT / height;
 			final float oversample = height / GLYPH_HEIGHT;
-			final Emote.Frame[] frames = emote.loadFrames();
+			final NativeFrame[] frames = emote.loadFrames();
 
 			final AnimatedGlyph.Frame[] animatedFrames = new AnimatedGlyph.Frame[frames.length];
 			for (int i = 0; i < frames.length; i++) {
-				final Emote.Frame frame = frames[i];
+				final NativeFrame frame = frames[i];
 				final Glyph glyph = new NativeImageGlyph(frame.image(), advance, oversample);
 				animatedFrames[i] = new AnimatedGlyph.Frame(glyph, frame.duration());
 			}
