@@ -2,7 +2,4 @@ accessWidener	v1	named
 
 accessible class net/minecraft/client/font/FontManager$ProviderIndex
 
-accessible class net/minecraft/client/font/FontStorage$GlyphPair
-accessible method net/minecraft/client/font/FontStorage$GlyphPair <init> (Lnet/minecraft/client/font/Glyph;Lnet/minecraft/client/font/Glyph;)V
-
 accessible method net/minecraft/client/font/FontStorage getGlyphRenderer (Lnet/minecraft/client/font/RenderableGlyph;)Lnet/minecraft/client/font/GlyphRenderer;
