@@ -51,4 +51,22 @@ public record NativeImageGlyph(
 	public float getOversample() {
 		return this.oversample;
 	}
+
+	@Override
+	public float getAdvance(boolean bold) {
+		// Bold is not supported
+		return this.getAdvance();
+	}
+
+	@Override
+	public float getBoldOffset() {
+		// Bold is not supported
+		return 0;
+	}
+
+	@Override
+	public float getShadowOffset() {
+		// Shadow is not supported
+		return 0;
+	}
 }
