@@ -3,7 +3,7 @@ package net.vinrobot.mcemote;
 import net.fabricmc.loader.api.FabricLoader;
 import net.vinrobot.mcemote.config.ConfigurationManager;
 import net.vinrobot.mcemote.config.ConfigurationService;
-import net.vinrobot.mcemote.config.impl.file.FileConfigurationService;
+import net.vinrobot.mcemote.config.file.FileConfigurationService;
 
 import java.nio.file.Path;
 

@@ -1,9 +1,7 @@
-package net.vinrobot.mcemote.config.impl.file;
+package net.vinrobot.mcemote.config.file;
 
 import net.vinrobot.mcemote.config.Configuration;
 import net.vinrobot.mcemote.config.ConfigurationService;
-import net.vinrobot.mcemote.config.TypedGson;
-import net.vinrobot.mcemote.config.impl.ConfigurationImpl;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -20,22 +18,15 @@ public class FileConfigurationService implements ConfigurationService {
 	}
 
 	@Override
-	public Configuration create() {
-		return new ConfigurationImpl();
-	}
-
-	@Override
-	public Configuration load() throws IOException {
-		FileConfiguration fileConfiguration;
+	public void load(final Configuration configuration) throws IOException {
+		final FileConfiguration fileConfiguration;
 		try (final Reader reader = Files.newBufferedReader(this.configFile)) {
 			fileConfiguration = this.gson.fromJson(reader, FileConfiguration.class);
 		}
 
-		final Configuration config = this.create();
 		if (fileConfiguration != null) {
-			fileConfiguration.copyTo(config);
+			fileConfiguration.copyTo(configuration);
 		}
-		return config;
 	}
 
 	@Override

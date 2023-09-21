@@ -1,4 +1,4 @@
-package net.vinrobot.mcemote.config.impl.file;
+package net.vinrobot.mcemote.config.file;
 
 import net.vinrobot.mcemote.config.Configuration;
 

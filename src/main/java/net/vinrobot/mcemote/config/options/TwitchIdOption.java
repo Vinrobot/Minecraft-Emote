@@ -1,9 +1,7 @@
-package net.vinrobot.mcemote.config.impl;
+package net.vinrobot.mcemote.config.options;
 
-import net.vinrobot.mcemote.config.ValidationFailedException;
-
-public class TwitchIdOptionImpl extends OptionImpl<String> {
-	public TwitchIdOptionImpl(final String defaultValue) {
+public class TwitchIdOption extends Option<String> {
+	public TwitchIdOption(final String defaultValue) {
 		super(defaultValue);
 	}
 

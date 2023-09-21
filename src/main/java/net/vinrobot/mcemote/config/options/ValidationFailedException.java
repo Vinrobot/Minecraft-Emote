@@ -1,4 +1,4 @@
-package net.vinrobot.mcemote.config;
+package net.vinrobot.mcemote.config.options;
 
 public class ValidationFailedException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
