@@ -32,7 +32,6 @@ public class ConfigurationScreen extends BaseScreen {
 	@Override
 	public void tick() {
 		super.tick();
-		this.twitchIdField.tick();
 	}
 
 	@Override

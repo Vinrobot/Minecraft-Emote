@@ -53,13 +53,20 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-	modClientCompileOnly "com.terraformersmc:modmenu:7.2.1"
+	modClientCompileOnly "com.terraformersmc:modmenu:8.0.0"
 
 	// WebP support for ImageIO, not fully working with animated WebP
 	modClientImplementation "com.twelvemonkeys.imageio:imageio-webp:3.9.4"
+	include "com.twelvemonkeys.common:common-io:3.9.4"
+	include "com.twelvemonkeys.common:common-lang:3.9.4"
+	include "com.twelvemonkeys.common:common-image:3.9.4"
+	include "com.twelvemonkeys.imageio:imageio-core:3.9.4"
+	include "com.twelvemonkeys.imageio:imageio-metadata:3.9.4"
+	include "com.twelvemonkeys.imageio:imageio-webp:3.9.4"
 
 	// WebP support for animated WebP using official Google's native library
 	modClientImplementation "com.github.Vinrobot.WebPDecoderJN:lib:1.3"
+	include "com.github.Vinrobot.WebPDecoderJN:lib:1.3"
 }
 
 processResources {
