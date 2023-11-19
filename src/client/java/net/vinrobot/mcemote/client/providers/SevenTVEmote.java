@@ -10,7 +10,7 @@ import net.vinrobot.mcemote.client.imageio.NativeFrame;
 import net.vinrobot.mcemote.client.imageio.NativeImageIO;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.util.Comparator;
 
 @Environment(EnvType.CLIENT)
@@ -25,7 +25,7 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 		return this.emote.data().host().files().stream()
 			.filter(f -> "WEBP".equalsIgnoreCase(f.format()))
 			.sorted(Comparator.comparingInt(EmoteFile::size))
-			.findFirst().get();
+			.findFirst().orElseThrow();
 	}
 
 	@Override
@@ -51,6 +51,6 @@ public class SevenTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 		final EmoteHost host = data.host();
 		final EmoteFile file = getFile();
 		final String url = "https:" + host.url() + "/" + file.name();
-		return NativeImageIO.readAll(new URL(url));
+		return NativeImageIO.readAll(URI.create(url));
 	}
 }

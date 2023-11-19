@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 
 public class BTTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BTTVEmote.class);
@@ -38,6 +38,6 @@ public class BTTVEmote implements net.vinrobot.mcemote.client.font.Emote {
 
 	@Override
 	public NativeFrame[] loadFrames() throws IOException {
-		return NativeImageIO.readAll(new URL("https://cdn.betterttv.net/emote/" + this.emote.id() + "/1x"));
+		return NativeImageIO.readAll(URI.create("https://cdn.betterttv.net/emote/" + this.emote.id() + "/1x"));
 	}
 }

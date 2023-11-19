@@ -58,6 +58,9 @@ dependencies {
 	// WebP support for animated WebP using official Google's native library
 	modClientImplementation "com.github.Vinrobot.WebPDecoderJN:lib:${project.webpdecoderjn_version}"
 	include "com.github.Vinrobot.WebPDecoderJN:lib:${rootProject.webpdecoderjn_version}"
+
+	modImplementation "org.apache.httpcomponents:httpclient-cache:${project.httpcomponents_version}"
+	include "org.apache.httpcomponents:httpclient-cache:${project.httpcomponents_version}"
 }
 
 processResources {
