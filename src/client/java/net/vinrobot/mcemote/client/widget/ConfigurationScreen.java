@@ -13,6 +13,8 @@ import net.vinrobot.mcemote.config.ConfigurationManager;
 public class ConfigurationScreen extends BaseScreen {
 	private static final Text MENU_TITLE = Text.translatableWithFallback("mcemote.options.title", "Minecraft Emote Options");
 	private static final Text TWITCH_ID_LABEL = Text.translatableWithFallback("mcemote.options.twitchId", "Twitch ID");
+	private static final Text EMOTE_SCALING_LABEL = Text.translatableWithFallback("mcemote.options.emoteScaling", "Emote Scaling");
+	private static final Text EMOTE_SCALING_INFO = Text.translatableWithFallback("mcemote.options.emoteScalingInfo", "Chat Settings → Line Spacing");
 
 	private static final int TITLE_COLOR = 0xFFFFFF;
 	private static final int LABEL_COLOR = 0xA0A0A0;
@@ -23,6 +25,7 @@ public class ConfigurationScreen extends BaseScreen {
 
 	private ButtonWidget doneButton;
 	private TextFieldWidget twitchIdField;
+	private SliderFieldWidget emoteScalingField;
 
 	public ConfigurationScreen(final Screen parent, final ConfigurationManager configManager) {
 		super(parent, MENU_TITLE);
@@ -47,6 +50,9 @@ public class ConfigurationScreen extends BaseScreen {
 		this.twitchIdField.setText(config.twitchId().get());
 		this.twitchIdField.setChangedListener((value) -> this.validateInputs());
 		this.addDrawableChild(this.twitchIdField);
+
+		this.emoteScalingField = new SliderFieldWidget(widgetX, 118, widgetWidth, widgetHeight, EMOTE_SCALING_INFO, 0);
+		this.addDrawable(this.emoteScalingField);
 
 		final int buttonSpacing = widgetHeight + 6;
 		int buttonY = this.height - 5;
@@ -100,6 +106,7 @@ public class ConfigurationScreen extends BaseScreen {
 
 		context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 16, TITLE_COLOR);
 		context.drawTextWithShadow(this.textRenderer, TWITCH_ID_LABEL, this.width / 2 - 100, 60, LABEL_COLOR);
+		context.drawTextWithShadow(this.textRenderer, EMOTE_SCALING_LABEL, this.width / 2 - 100, 106, LABEL_COLOR);
 
 		super.render(context, mouseX, mouseY, delta);
 	}

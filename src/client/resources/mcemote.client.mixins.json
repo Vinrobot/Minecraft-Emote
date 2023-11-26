@@ -5,7 +5,7 @@
 	"client": [
 		"ChatHudMixin",
 		"FontManagerMixin",
-		"MinecraftEmoteClientMixin"
+		"TextRendererDrawerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -5,12 +5,15 @@ import net.minecraft.client.font.Font;
 import net.minecraft.client.font.FontStorage;
 import net.minecraft.client.font.Glyph;
 import net.minecraft.client.font.GlyphRenderer;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
 
 public abstract class CustomFontStorage extends FontStorage {
+	public static final float GLYPH_HEIGHT = TextRenderer.ARABIC_SHAPING_LETTERS_SHAPE;
+
 	private final Identifier identifier;
 	private final TextureManager textureManager;
 	private final GlyphRenderer blankGlyphRenderer;

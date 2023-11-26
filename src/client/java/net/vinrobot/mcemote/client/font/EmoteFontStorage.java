@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 public class EmoteFontStorage extends CustomFontStorage {
 	public static final Identifier IDENTIFIER = new Identifier("mcemote.fonts", "emotes");
-	public static final float GLYPH_HEIGHT = 8;
 
 	private final EmotesManager emotesManager;
 	private final Map<Integer, Future<AnimatedGlyph>> framesCache = new HashMap<>();
